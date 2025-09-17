@@ -8,4 +8,4 @@ I'm building a tool to scrape the comments off a Reddit gameday thread, in which
 - group and analyze comments
 
 ## Concepts Learned
-- none yet
+- first, I went to https://praw.readthedocs.io/en/stable/tutorials/comments.html to learn how to get the comments from the Reddit API
