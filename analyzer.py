@@ -42,10 +42,10 @@ stopwords = ["i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you",
              "down", "in", "out", "on", "off", "over", "under", "again", "further", "then", "once", "here", "there", "when", 
              "where", "why", "how", "all", "any", "both", "each", "few", "more", "most", "other", "some", "such", "no", "nor", 
              "not", "only", "own", "same", "so", "than", "too", "very", "s", "t", "can", "will", "just", "don", "should", "now"]
-tokenized_comments = [
-    token.text 
+lemma_comments = [
+    token.lemma_ 
     for doc in spacy_doc
     for token in doc
-    if token.text not in stopwords]
+    if not token.is_stop and token.is_alpha]
 
-print(tokenized_comments)
+print(lemma_comments)
