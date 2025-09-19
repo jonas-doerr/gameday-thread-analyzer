@@ -2,6 +2,10 @@ import praw
 import re
 import emoji
 import spacy
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 def preprocess_comment(comment: str) -> str:
     comment = comment.lower() # lowercase
@@ -13,8 +17,8 @@ def preprocess_comment(comment: str) -> str:
     return comment
 
 reddit = praw.Reddit(
-    client_id="REMOVED",
-    client_secret="QTecEq1zqjE0ymIVC3FvwhBOhox5zw",
+    client_id=os.getenv("REDDIT_CLIENT_ID"),
+    client_secret=os.getenv("REDDIT_CLIENT_SECRET"),
     user_agent="packers_analysis"
 )
 
