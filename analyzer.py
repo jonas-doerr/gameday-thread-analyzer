@@ -5,6 +5,8 @@ import spacy
 from dotenv import load_dotenv
 import os
 from collections import Counter
+import nltk
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 load_dotenv()
 
@@ -50,6 +52,7 @@ lemma_comments = [
     c[0] + '*' * (len(c) - 1) if c in bad_words else c
     for c in lemma_comments
     if c not in stopwords]
+lemma_comments = ["parsons" if c == "parson" else c for c in lemma_comments]
 
 #find keywords
 ranked_keywords = Counter(lemma_comments).most_common(10)
@@ -69,16 +72,34 @@ packers_roster = [["Israel", "Abanikanda"], ["Deslin", "Alexandre"], ["Zayne", "
     ["Jordan", "Morgan"], ["Arron", "Mosby"], ["Luke", "Musgrave"], ["Isaiah", "Neyor"],
     ["Nick", "Niemann"], ["Keisean", "Nixon"], ["Kitan", "Oladapo"], ["Collin", "Oliver"],
     ["Matthew", "Orzech"], ["Micah", "Parsons"], ["Jayden", "Reed"], ["Sean", "Rhyan"],
-    ["Micah", "Robinson"], ["Will", "Sheppard"], ["Jaylin", "Simpson"], ["Ben", "Sims"],
+    ["Micahh", "Robinson"], ["Will", "Sheppard"], ["Jaylin", "Simpson"], ["Ben", "Sims"],
     ["Barryn", "Sorrell"], ["Nazir", "Stackhouse"], ["Pierre", "Strong"], ["Zach", "Tom"],
     ["Clayton", "Tune"], ["Carrington", "Valentine"], ["Lukas", "Van Ness"], ["Eric", "Wilson"],
     ["Christian", "Watson"], ["Tory", "Whittington"], ["Dontayvion", "Wicks"], ["Devonte", "Wyatt"]]
 packers_lowercase_roster = [[player.lower() for player in full_name] for full_name in packers_roster]
-mentioned_player = {}
+mentioned_player = Counter()
 for c in lemma_comments:
     for first, last in packers_lowercase_roster:
         if c == first or c == last:
             full_name = f"{first.title()} {last.title()}"
-            mentioned_player[full_name] = mentioned_player.get(full_name, 0) + 1
+            mentioned_player[full_name] += 1
 
-print(mentioned_player)
+print(mentioned_player.most_common(5)) # still need to sort this dictionary by amounts and show the top few
+
+# analyze overall sentiment of comments
+# nltk.download("vader_lexicon")
+sia = SentimentIntensityAnalyzer()
+sentiment_scores = [sia.polarity_scores(c) for c in cleaned_comments]
+
+positive_comments = 0
+negative_comments = 0
+neutral_comments = 0
+#lump scores into positive or negative
+for score in sentiment_scores:
+    if score['compound'] > 0.05:
+        positive_comments += 1
+    elif score['compound'] > -0.05:
+        neutral_comments += 1
+    else:
+        negative_comments += 1
+print(f"Postive: {positive_comments}\nNegative: {negative_comments}\nNeutral: {neutral_comments}")

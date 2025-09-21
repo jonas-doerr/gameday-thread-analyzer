@@ -14,7 +14,7 @@ I'm building a tool to scrape the comments off a Reddit gameday thread, in which
 
 ## Analysis ideas
 - most mentioned names [DONE]
-- positive or negative overall sentiment 
+- positive or negative overall sentiment [DONE]
 - most mentioned words [DONE]
 - common themes throughout the thread
 - guess whether or not the Packers won
@@ -25,3 +25,6 @@ I figured out that I can't just leak my Reddit app's secret, so it took my a lon
 
 ### 9.20
 I ranked the keywords most commonly seen in the gameday thread. I kept adding new words to my stopwords list, because words like "look" or "good" are not as useful as words like "refs" or "Parsons" (a player name). I also added a list of the Packers roster and used it to look through the lemmatized words and see which players were mentioned the most often. There was some margin of error (for example, parson not counting for Micah Parsons), which I might fix in my next edit.
+
+### 9.21
+I added some general analysis of the comments that can show the overall sentiment of the comment thread. I also edited the displayed most mentioned names that fixed that lemmitization was removing the "s" at the end of Parsons' name, and now it only displays the top 5 names. This code was all pretty simple except for learning a little bit more about Counter() and how the vader lexicon works.
