@@ -26,8 +26,11 @@ reddit = praw.Reddit(
 )
 
 # fetch comments from reddit thread
-thread_link = "https://www.reddit.com/r/GreenBayPackers/comments/1neojbv/week_2_game_thread_washington_commanders_green/"
-submission = reddit.submission(url=thread_link)
+week_2_thread = "https://www.reddit.com/r/GreenBayPackers/comments/1neojbv/week_2_game_thread_washington_commanders_green/"
+week_3_thread = "https://www.reddit.com/r/GreenBayPackers/comments/1nmww8q/week_3_game_thread_green_bay_packers_cleveland/"
+week_3_postgame_thread = "https://www.reddit.com/r/GreenBayPackers/comments/1nn25mu/week_3_post_game_thread_green_bay_packers/"
+week_2_postgame_thread = "https://www.reddit.com/r/GreenBayPackers/comments/1nesr4u/week_2_post_game_thread_washington_commanders/"
+submission = reddit.submission(url=week_3_postgame_thread)
 print("fetching comments") #debug in case gets laggy
 submission.comments.replace_more(limit=10) #it takes a while if I take too many comments
 print("done fetching") #also for debugging purposes
@@ -46,7 +49,7 @@ lemma_comments = [
     if not token.is_stop and token.is_alpha] # removes numbers and stopwords
 
 # stopwords that didn't get caught
-stopwords = ['m', 's', 'non', 've', 'not', 'see', 'talk', 'game', 'play', 'like', 'get', 'good', 'bad']
+stopwords = ['m', 's', 'non', 've', 'not', 'see', 'talk', 'game', 'play', 'like', 'get', 'good', 'bad', 'go', 'need']
 bad_words = ['fuck', 'shit', 'ass', 'bitch', 'damn']
 lemma_comments = [
     c[0] + '*' * (len(c) - 1) if c in bad_words else c
@@ -69,7 +72,7 @@ packers_roster = [["Israel", "Abanikanda"], ["Deslin", "Alexandre"], ["Zayne", "
     ["Donovan", "Jennings"], ["Jamon", "Johnson"], ["Darian", "Kinnard"], ["Tucker", "Kraft"],
     ["MarShawn", "Lloyd"], ["Jordan", "Love"], ["Isaiah", "McDuffie"], ["Xavier", "McKinney"],
     ["Brandon", "McManus"], ["Mark", "McNamee"], ["Bo", "Melton"], ["Jacob", "Monk"],
-    ["Jordan", "Morgan"], ["Arron", "Mosby"], ["Luke", "Musgrave"], ["Isaiah", "Neyor"],
+    ["Jordann", "Morgan"], ["Arron", "Mosby"], ["Luke", "Musgrave"], ["Isaiah", "Neyor"],
     ["Nick", "Niemann"], ["Keisean", "Nixon"], ["Kitan", "Oladapo"], ["Collin", "Oliver"],
     ["Matthew", "Orzech"], ["Micah", "Parsons"], ["Jayden", "Reed"], ["Sean", "Rhyan"],
     ["Micahh", "Robinson"], ["Will", "Sheppard"], ["Jaylin", "Simpson"], ["Ben", "Sims"],
@@ -84,7 +87,9 @@ for c in lemma_comments:
             full_name = f"{first.title()} {last.title()}"
             mentioned_player[full_name] += 1
 
-print(mentioned_player.most_common(5)) # still need to sort this dictionary by amounts and show the top few
+top_players = [player for player, _ in mentioned_player.most_common(5)]
+print(mentioned_player.most_common(5))
+# print(top_players)
 
 # analyze overall sentiment of comments
 # nltk.download("vader_lexicon")
@@ -102,4 +107,26 @@ for score in sentiment_scores:
         neutral_comments += 1
     else:
         negative_comments += 1
-print(f"Postive: {positive_comments}\nNegative: {negative_comments}\nNeutral: {neutral_comments}")
+print(f"Postive comments: {positive_comments}\nNegative comments: {negative_comments}")
+if positive_comments > negative_comments:
+    print("It seems like the Packers won this game.")
+else:
+    print("It seems like the Packers lost this game.")
+
+# analyze sentiment towards most mentioned players
+player_comments = {player: [] for player in top_players}
+for comment in cleaned_comments:
+    for player in top_players:
+        first, last = player.split()
+        if first.lower() in comment or last.lower() in comment:
+            player_comments[player].append(comment)
+player_sentiments = {player: [sia.polarity_scores(c) for c in player_comments[player]] for player in top_players}
+# compile sentiments into an average overall score per player
+average_player_sentiments = {}
+for player, scores in player_sentiments.items():
+    if scores:
+        compounds = [s["compound"] for s in scores]
+        average_player_sentiments[player] = sum(compounds) / len(compounds)
+    else:
+        average_player_sentiments[player] = 0.0
+print(average_player_sentiments)

@@ -5,19 +5,14 @@ I'm building a tool to scrape the comments off a Reddit gameday thread, in which
 - build tool to scrape comments [DONE]
 - tokenize comments [DONE]
     - remove some basic stopwords that spacy didn't catch [DONE]
-- group and analyze comments
+- group and analyze comments [DONE]
+- display the data on a webpage
+    - allow user to submit links
 
 ## Concepts Learned
 - first, I went to https://praw.readthedocs.io/en/stable/tutorials/comments.html to learn how to get the comments from the Reddit API
 - reviewed regex and how to efficiently preprocess words
 - learned some basics of the spacy library
-
-## Analysis ideas
-- most mentioned names [DONE]
-- positive or negative overall sentiment [DONE]
-- most mentioned words [DONE]
-- common themes throughout the thread
-- guess whether or not the Packers won
 
 ## Journal
 ### 9.19
@@ -28,3 +23,6 @@ I ranked the keywords most commonly seen in the gameday thread. I kept adding ne
 
 ### 9.21
 I added some general analysis of the comments that can show the overall sentiment of the comment thread. I also edited the displayed most mentioned names that fixed that lemmitization was removing the "s" at the end of Parsons' name, and now it only displays the top 5 names. This code was all pretty simple except for learning a little bit more about Counter() and how the vader lexicon works.
+
+### 9.22
+I decided to analyze the comments involving the top 5 mentioned players. I also added some more data with game threads from when the Packers lose. I think some things are getting thrown off in the analysis, because in one game, Jordan Love played very badly, but still had a positive sentiment analysis score. I think this might be due to the word 'love' often being used in a positive context. One more thing I did was to just do a quick comparison of negative comments vs positive comments to predict whether the Packers won the game, which surprisingly has been accurate, albeit in a small sample size.
