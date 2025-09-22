@@ -26,3 +26,4 @@ I added some general analysis of the comments that can show the overall sentimen
 
 ### 9.22
 I decided to analyze the comments involving the top 5 mentioned players. I also added some more data with game threads from when the Packers lose. I think some things are getting thrown off in the analysis, because in one game, Jordan Love played very badly, but still had a positive sentiment analysis score. I think this might be due to the word 'love' often being used in a positive context. One more thing I did was to just do a quick comparison of negative comments vs positive comments to predict whether the Packers won the game, which surprisingly has been accurate, albeit in a small sample size.
+A bit later, I organized the code into functions, so it will be easier to turn into a streamlit webpage during my next coding session.
