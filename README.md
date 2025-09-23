@@ -7,7 +7,11 @@ I'm building a tool to scrape the comments off a Reddit gameday thread, in which
     - remove some basic stopwords that spacy didn't catch [DONE]
 - group and analyze comments [DONE]
 - display the data on a webpage
-    - allow user to submit links
+    - allow user to submit links [DONE]
+    - Allow manipulation of the number of keywords shown and top mentioned players
+    - Show loading symbol with text of what's happening while data is loading
+    - drop-down list to select one of the available links instead submitting your own.
+    - Make a pie chart to display confidence in the win/loss prediction
 
 ## Concepts Learned
 - first, I went to https://praw.readthedocs.io/en/stable/tutorials/comments.html to learn how to get the comments from the Reddit API
@@ -27,3 +31,6 @@ I added some general analysis of the comments that can show the overall sentimen
 ### 9.22
 I decided to analyze the comments involving the top 5 mentioned players. I also added some more data with game threads from when the Packers lose. I think some things are getting thrown off in the analysis, because in one game, Jordan Love played very badly, but still had a positive sentiment analysis score. I think this might be due to the word 'love' often being used in a positive context. One more thing I did was to just do a quick comparison of negative comments vs positive comments to predict whether the Packers won the game, which surprisingly has been accurate, albeit in a small sample size.
 A bit later, I organized the code into functions, so it will be easier to turn into a streamlit webpage during my next coding session.
+
+### 9.23
+Developed it into a web app with streamlit. It was much easier since (a) I had already made an app using streamlit [the baseball card simulator] and (b) this only involved displaying data with minimal moving parts. Overcame a couple small hiccups learning how to use progress bars and bar graphs with pandas, and also solved a bug that ran the code in analyzer.py every time, which sped up run times considerably.

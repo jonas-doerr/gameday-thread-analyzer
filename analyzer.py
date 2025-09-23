@@ -112,12 +112,12 @@ def overall_sentiment(comment_list):
             neutral_comments += 1
         else:
             negative_comments += 1
-    print(f"Postive comments: {positive_comments}\nNegative comments: {negative_comments}")
+    # print(f"Postive comments: {positive_comments}\nNegative comments: {negative_comments}")
     if positive_comments > negative_comments:
-        print("It seems like the Packers won this game.")
+        # print("It seems like the Packers won this game.")
         win_prediction = True
     else:
-        print("It seems like the Packers lost this game.")
+        # print("It seems like the Packers lost this game.")
         win_prediction = False
     return win_prediction, positive_comments, negative_comments, neutral_comments
 
@@ -141,10 +141,14 @@ def player_sentiments(comment_list, top_players):
     return average_player_sentiments
 
 # run the program
-cleaned_comments = clean_comments(get_reddit_comments(week_3_postgame_thread, 2))
-lemmatized_comments = tokenize_comments(cleaned_comments)
-print(find_keywords(lemmatized_comments, 10))
-mentioned_player, top_players = find_most_mentioned(lemmatized_comments, 5)
-win_or_lose, _, _, _ = overall_sentiment(cleaned_comments)
-print(f"Prediction: Did the Packers win?  {win_or_lose}")
-print(player_sentiments(cleaned_comments, top_players))
+def main():
+    cleaned_comments = clean_comments(get_reddit_comments(week_3_postgame_thread, 2))
+    lemmatized_comments = tokenize_comments(cleaned_comments)
+    print(find_keywords(lemmatized_comments, 10))
+    mentioned_player, top_players = find_most_mentioned(lemmatized_comments, 5)
+    win_or_lose, _, _, _ = overall_sentiment(cleaned_comments)
+    print(f"Prediction: Did the Packers win?  {win_or_lose}")
+    print(player_sentiments(cleaned_comments, top_players))
+
+if __name__ == "__main__":
+    main()
