@@ -7,11 +7,8 @@ I'm building a tool to scrape the comments off a Reddit gameday thread, in which
     - remove some basic stopwords that spacy didn't catch [DONE]
 - group and analyze comments [DONE]
 - display the data on a webpage
-    - allow user to submit links [DONE]
-    - Allow manipulation of the number of keywords shown and top mentioned players
-    - Show loading symbol with text of what's happening while data is loading
-    - drop-down list to select one of the available links instead submitting your own.
-    - Make a pie chart to display confidence in the win/loss prediction
+    - show sample comments underneath main analysis and individual players (with checkbox option to hide or show)
+    - allow for other rosters to be used
 
 ## Concepts Learned
 - first, I went to https://praw.readthedocs.io/en/stable/tutorials/comments.html to learn how to get the comments from the Reddit API

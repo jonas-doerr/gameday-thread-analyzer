@@ -54,7 +54,7 @@ def tokenize_comments(cleaned_comments):
     
     # stopwords that didn't get caught
     stopwords = ['m', 's', 'non', 've', 'not', 'see', 'talk', 'game', 'play', 'like', 'get', 'good', 'bad', 'go', 'need']
-    bad_words = ['fuck', 'shit', 'ass', 'bitch', 'damn']
+    bad_words = ['fuck', 'shit', 'ass', 'bitch', 'damn', 'fucking']
     lemma_comments = [
         c[0] + '*' * (len(c) - 1) if c in bad_words else c
         for c in lemma_comments
