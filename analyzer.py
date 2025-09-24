@@ -138,7 +138,7 @@ def player_sentiments(comment_list, top_players):
             average_player_sentiments[player] = sum(compounds) / len(compounds)
         else:
             average_player_sentiments[player] = 0.0
-    return average_player_sentiments
+    return average_player_sentiments, player_comments
 
 # run the program
 def main():
@@ -148,7 +148,8 @@ def main():
     mentioned_player, top_players = find_most_mentioned(lemmatized_comments, 5)
     win_or_lose, _, _, _ = overall_sentiment(cleaned_comments)
     print(f"Prediction: Did the Packers win?  {win_or_lose}")
-    print(player_sentiments(cleaned_comments, top_players))
+    overall_feelings_player, _ = player_sentiments(cleaned_comments, top_players)
+    print(overall_feelings_player)
 
 if __name__ == "__main__":
     main()

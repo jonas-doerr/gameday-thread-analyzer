@@ -31,3 +31,6 @@ A bit later, I organized the code into functions, so it will be easier to turn i
 
 ### 9.23
 Developed it into a web app with streamlit. It was much easier since (a) I had already made an app using streamlit [the baseball card simulator] and (b) this only involved displaying data with minimal moving parts. Overcame a couple small hiccups learning how to use progress bars and bar graphs with pandas, and also solved a bug that ran the code in analyzer.py every time, which sped up run times considerably.
+
+### 9.24
+Made a number of small adjustments to the website to improve the overall experience. The most notable are the ability to adjust some parameters for the analysis and the display of comments in different sections of the analysis. The final touch I want to make is add rosters for every NFL team, so it can be used on other subreddits too.

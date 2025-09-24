@@ -9,11 +9,6 @@ def load_comments(url_link, comment_depth):
     return comment_list
 
 @st.cache_data
-def lemmatization(comments):
-    lemmos = tokenize_comments(comments)
-    return lemmos
-
-@st.cache_data
 def comment_analysis(comments, keyword_amount, player_analysis_count):
     lemmos = tokenize_comments(comments) #lemmatize
     keywords = find_keywords(lemmos, keyword_amount) #get keywords
@@ -66,28 +61,40 @@ if st.button("Analyze Data"):
         st.session_state.cleaned_comments = load_comments(url, analysis_depth)
 
         #Run main function
-        keywords_df, win_or_lose, positive_comments, negative_comments, top_players = comment_analysis(st.session_state.cleaned_comments, keyword_count, players_analyzed)
+        st.session_state.keywords_df, st.session_state.win_or_lose, st.session_state.pos_comments, st.session_state.neg_comments, st.session_state.top_players = comment_analysis(st.session_state.cleaned_comments, keyword_count, players_analyzed)
+        st.session_state.player_sent, st.session_state.player_comments = player_sentiments(st.session_state.cleaned_comments, st.session_state.top_players)
 
-        #Find keywords
-        st.subheader("Top Keywords")
-        st.bar_chart(keywords_df, horizontal = True)
+# print results
+if "keywords_df" in st.session_state:
+    # Keywords
+    st.subheader("Top Keywords")
+    st.bar_chart(st.session_state.keywords_df, horizontal=True)
 
-        #Predict win or loss
-        st.subheader("Win/Loss Prediction")
-        sentiment_df = pd.DataFrame({"Sentiment": ["Positive", "Negative"], "Count": [positive_comments, negative_comments]})
-        sentiment_fig = px.pie(sentiment_df, names = "Sentiment", values = "Count", title = "Positive vs Negative Sentiment in Comments")
-        st.plotly_chart(sentiment_fig)
-        if win_or_lose is True:
-            st.write("**Prediction**: It seems like the Packers won this game.")
-        else:
-            st.write("**Prediction**: The Packers probably lost this game.")
+    # Win/Loss Prediction
+    st.subheader("Win/Loss Prediction")
+    sentiment_df = pd.DataFrame({"Sentiment": ["Positive", "Negative"], "Count": [st.session_state.pos_comments, st.session_state.neg_comments]})
+    sentiment_fig = px.pie(sentiment_df, names="Sentiment", values="Count", title="Positive vs Negative Sentiment in Comments")
+    st.plotly_chart(sentiment_fig)
 
-        # Display sentiment towards most mentioned players
-        st.subheader("Sentiment Analysis of Most Mentioned Players")
-        st.write("Analyzes all mentions of these players and rates the feelings towards them on a scale of 1-100. Longer bars indicate greater positivity, and a half-full bar indicates neutral sentiment.")
+    if st.session_state.win_or_lose:
+        st.write("**Prediction**: It seems like the Packers won this game.")
+    else:
+        st.write("**Prediction**: The Packers probably lost this game.")
 
-        #Find most mentioned players
-        player_sent = player_sentiments(st.session_state.cleaned_comments, top_players)
-        for player in player_sent:
-            player_sent[player] = (player_sent[player] + 1) / 2 # Convert the value to fit between 0-1
-            st.progress(player_sent[player], text = f"{player}")
+    if st.checkbox("See Sample Comments?", key = "sample_comments"):
+        for c in st.session_state.cleaned_comments[0:10]:
+            st.write(c)
+
+    # Player Sentiments
+    st.subheader("Sentiment Analysis of Most Mentioned Players")
+    st.write(
+        "Analyzes all mentions of these players and rates the feelings towards them on a scale of 1-100. "
+        "Longer bars indicate greater positivity, and a half-full bar indicates neutral sentiment."
+    )
+
+    for player in st.session_state.player_sent:
+        score = (st.session_state.player_sent[player] + 1) / 2  # Convert -1..1 to 0..1
+        st.progress(score, text=f"{player}")
+        if st.checkbox(f"Show related comments for {player}", key=f"{player}_comments"):
+            for c in st.session_state.player_comments[player][:5]:
+                st.write(c)
