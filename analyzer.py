@@ -7,6 +7,7 @@ import os
 from collections import Counter
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
+import streamlit as st
 
 load_dotenv()
 
@@ -26,10 +27,21 @@ week_3_postgame_thread = "https://www.reddit.com/r/GreenBayPackers/comments/1nn2
 week_2_postgame_thread = "https://www.reddit.com/r/GreenBayPackers/comments/1nesr4u/week_2_post_game_thread_washington_commanders/"
 
 def get_reddit_comments(link, more_comments_limit):
+    if "REDDIT_CLIENT_ID" in st.secrets:
+        client_id = st.secrets["REDDIT_CLIENT_ID"]
+        client_secret = st.secrets["REDDIT_CLIENT_SECRET"]
+        user_agent = "packers_analysis"
+    else:
+        client_id = os.getenv("REDDIT_CLIENT_ID")
+        client_secret = os.getenv("REDDIT_CLIENT_SECRET")
+        user_agent = "packers_analysis"
+
+    # Now pass them to praw.Reddit
     reddit = praw.Reddit(
-    client_id=os.getenv("REDDIT_CLIENT_ID"),
-    client_secret=os.getenv("REDDIT_CLIENT_SECRET"),
-    user_agent="packers_analysis")
+        client_id=client_id,
+        client_secret=client_secret,
+        user_agent=user_agent
+    )
 
     submission = reddit.submission(url=link)
     # print("fetching comments") #debug in case gets laggy
