@@ -11,5 +11,3 @@ python-dotenv>=1.0
 # For web scraping / APIs
 praw>=7.8
 requests>=2.32
-
-git+https://github.com/praw-dev/praw.git@master
