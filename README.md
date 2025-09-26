@@ -1,6 +1,8 @@
 # Packers Gameday Thread Analyzer
 This is a tool to scrape the comments off a Reddit gameday thread, in which fans discuss an ongoing sports game. It will be particularly focused towards analyzing threads in the Green Bay Packers (American football team) subreddit. It can analyze any sports subreddit, but the player analysis will only work on threads involving Packers players.
 
+Link: https://gameday-thread-analyzer.streamlit.app/
+
 ## Screenshot of the Analyzer in Use
 ![Screenshot 1](gameday-thread-analyzer-screenshot/gameday-thread-analyzer-screenshot-1.jpg)
 ![Screenshot 2](gameday-thread-analyzer-screenshot/gameday-thread-analyzer-screenshot-2.jpg)
