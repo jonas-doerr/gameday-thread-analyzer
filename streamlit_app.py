@@ -19,6 +19,7 @@ def comment_analysis(comments, keyword_amount, player_analysis_count):
 
 st.title("Packers Reddit Thread Analyzer")
 st.write("Submit a link to a post on the GreenBayPackers subreddit and this program will analyze it!")
+st.write("You can sumbit links to any subreddit, but the player analysis will work best with threads mentioning Packers players.")
 
 # Link inputs
 col1, col2 = st.columns(2)

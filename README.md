@@ -1,14 +1,9 @@
 # Packers Gameday Thread Analyzer
-I'm building a tool to scrape the comments off a Reddit gameday thread, in which fans discuss an ongoing sports game. It will be particularly focused towards analyzing threads in the Green Bay Packers (American football team) subreddit.
+This is a tool to scrape the comments off a Reddit gameday thread, in which fans discuss an ongoing sports game. It will be particularly focused towards analyzing threads in the Green Bay Packers (American football team) subreddit. It can analyze any sports subreddit, but the player analysis will only work on threads involving Packers players.
 
-## To-do list
-- build tool to scrape comments [DONE]
-- tokenize comments [DONE]
-    - remove some basic stopwords that spacy didn't catch [DONE]
-- group and analyze comments [DONE]
-- display the data on a webpage
-    - allow for other rosters to be used
-- take screenshots and publish the website
+## Screenshot of the Analyzer in Use
+![Screenshot 1](gameday-thread-analyzer-screenshot/gameday-thread-analyzer-screenshot-1.jpg)
+![Screenshot 2](gameday-thread-analyzer-screenshot/gameday-thread-analyzer-screenshot-2.jpg)
 
 ## Concepts Learned
 - first, I went to https://praw.readthedocs.io/en/stable/tutorials/comments.html to learn how to get the comments from the Reddit API
@@ -35,3 +30,6 @@ Developed it into a web app with streamlit. It was much easier since (a) I had a
 
 ### 9.24
 Made a number of small adjustments to the website to improve the overall experience. The most notable are the ability to adjust some parameters for the analysis and the display of comments in different sections of the analysis. The final touch I want to make is add rosters for every NFL team, so it can be used on other subreddits too.
+
+### 9.25
+Struggled deploying the streamlit website, because the secrets didn't automatically load and many packages wouldn't install like I expected, so I learned the importance of a good requirements.txt file. Gemini and ChatGPT both gave me a lot of useless advice, but by trying different things on my own I finally got it to work. This is the final, polished version.
