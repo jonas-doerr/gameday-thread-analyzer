@@ -10,6 +10,15 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 load_dotenv()
 
+try:
+    nltk.data.find("sentiment/vader_lexicon.zip")
+except LookupError:
+    nltk.download("vader_lexicon")
+
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
+sia = SentimentIntensityAnalyzer()
+
 # fetch comments from reddit thread
 week_2_thread = "https://www.reddit.com/r/GreenBayPackers/comments/1neojbv/week_2_game_thread_washington_commanders_green/"
 week_3_thread = "https://www.reddit.com/r/GreenBayPackers/comments/1nmww8q/week_3_game_thread_green_bay_packers_cleveland/"
