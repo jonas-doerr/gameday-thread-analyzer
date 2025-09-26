@@ -7,13 +7,14 @@ I'm building a tool to scrape the comments off a Reddit gameday thread, in which
     - remove some basic stopwords that spacy didn't catch [DONE]
 - group and analyze comments [DONE]
 - display the data on a webpage
-    - show sample comments underneath main analysis and individual players (with checkbox option to hide or show)
     - allow for other rosters to be used
+- take screenshots and publish the website
 
 ## Concepts Learned
 - first, I went to https://praw.readthedocs.io/en/stable/tutorials/comments.html to learn how to get the comments from the Reddit API
 - reviewed regex and how to efficiently preprocess words
 - learned some basics of the spacy library
+- the rest of what I learned is in the journal below
 
 ## Journal
 ### 9.19

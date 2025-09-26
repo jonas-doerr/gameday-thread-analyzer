@@ -1,0 +1,11 @@
+streamlit
+praw
+pandas
+plotly
+nltk
+spacy
+emoji
+python-dotenv
+os
+collections
+re
